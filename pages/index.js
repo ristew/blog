@@ -14,22 +14,19 @@ export default function Index({ allPosts }) {
     <>
       <Layout>
         <Head>
-          <title>Next.js Blog Example with {CMS_NAME}</title>
+          <title>Riley Stewart's blog</title>
         </Head>
-        <Container>
-          <Intro />
-          {heroPost && (
-            <HeroPost
-              title={heroPost.title}
-              coverImage={heroPost.coverImage}
-              date={heroPost.date}
-              author={heroPost.author}
-              slug={heroPost.slug}
-              excerpt={heroPost.excerpt}
-            />
-          )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-        </Container>
+          <section className="font-serif flex-col md:flex-row flex md:justify-between mb-8 md:mb-8">
+            <div className="pt-8">
+              <div className="font-bold text-3xl italic">Sententiae scribendae</div>
+              <div className="text-xl italic">The blog of Riley Stewart</div>
+              <br/>
+              <p>I'm interested in complexity, the ancient world, supplements, and computing.  <br/>Currently I'm a software engineer with his head in the cloud.</p>
+            </div>
+          </section>
+          <section className="font-serif flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">
+            {<MoreStories posts={allPosts} />}
+          </section>
       </Layout>
     </>
   )
