@@ -21,7 +21,10 @@ export default function Index({ allPosts }) {
               <div className="font-bold text-3xl italic">Sententiae scribendae</div>
               <div className="text-xl italic">The blog of Riley Stewart</div>
               <br/>
-              <p>I'm interested in complexity, the ancient world, supplements, and computing.  <br/>Currently I'm a software engineer with his head in the cloud.</p>
+              <p>A software engineer with his head in the cloud.</p>
+              <p>I'm interested in complexity, the ancient world, wellness, and computing.</p>
+              <p>I live in Seattle with my dog, cat, and future wife.</p>
+              <p>Contact: me@here</p>
             </div>
           </section>
           <section className="font-serif flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">

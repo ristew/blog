@@ -7,6 +7,7 @@ export default function PostHeader({ title, date, author }) {
   return (
     <>
       <PostTitle>{title}</PostTitle>
+      <DateFormatter dateString={date} />
     </>
   )
 }
