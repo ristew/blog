@@ -6,7 +6,7 @@ export default function Layout({ preview, children }) {
   return (
     <div>
       <Meta />
-      <div className="font-serif h-full bg-amber-100 pl-20">
+      <div className="font-serif h-full bg-amber-50 pl-20">
         <main>{children}</main>
       </div>
       <Footer />
