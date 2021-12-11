@@ -4,6 +4,7 @@
 
 body {
     @apply bg-amber-50;
+    overflow-y: scroll;
 }
 
 /* Start purging... */
