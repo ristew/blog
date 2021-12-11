@@ -1,7 +1,7 @@
 ---
 title: 'Beginning this very blog'
 excerpt: 'I have arrived in the wild world of blogging.'
-date: '2020-03-16T05:35:07.322Z'
+date: '2021-12-09'
 author:
   name: Riley Stewart
 ---
