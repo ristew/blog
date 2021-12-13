@@ -115,7 +115,7 @@ export default function Banner() {
         setShowInfo(!showInfo);
       }} height={height}>
       </canvas>
-      <div id="banner-info" className="md:ml-20 ml-10 font-serif h-full" hidden={!showInfo}>
+      <div id="banner-info" className="md:ml-20 ml-5 font-serif h-full" hidden={!showInfo}>
         <ValueChanger name="rule" value={rule} setter={setRule} presets={[30, 45, 90, 105, 110]} />
         <ValueChanger name="window size" value={windowSize} setter={setWindowSize} presets={[22, 51, 101, 255]} />
         <ValueChanger name="cell size" value={bs} setter={setBs} presets={[1, 2, 4, 8]} />
