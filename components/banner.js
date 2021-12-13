@@ -19,7 +19,7 @@ const StateLink = ({ setter, num }) => {
   return (
     <a href="" className="link" onClick={e => {
       e.preventDefault();
-      setter(num);
+      setter(+num);
     }}>{num}</a>
   )
 };
@@ -48,7 +48,7 @@ const ValueChanger = ({ name, value, setter, presets }) => {
   })
   return (
     <p>
-      {name}: <input key={`preset-${name}`} className="w-12" type="number" value={value} onChange={e => setter(e.target.value)}/>
+      {name}: <input key={`preset-${name}`} className="w-12" type="number" value={value} onChange={e => setter(+e.target.value)}/>
     <span> try </span>{presetLinks}
   </p>);
 }
@@ -61,10 +61,15 @@ export default function Banner() {
   }
   const [windowSize, setWindowSize] = useState(51);
   const [rule, setRule] = useState(30);
+  if (rule < 0) {
+    return setRule(0);
+  } else if (rule > 255) {
+    return setRule(255);
+  }
   const [showInfo, setShowInfo] = useState(false);
   const [seed, setSeed] = useState(123);
   const [animateSpeed, setAnimateSpeed] = useState(0);
-  const height = bs * windowSize;
+  const height = bs * windowSize - 2;
   let interval;
   if (seed > 0 && seed < windowSize) {
     // will leave a gap, seed should always be greater than windowSize
@@ -110,14 +115,14 @@ export default function Banner() {
 
   return (
     <>
-      <canvas id="banner" className="hover:cursor-help w-full" onClick={e => {
+      <canvas id="banner" className="border-b-2 border-stone-400 hover:cursor-help w-full" onClick={e => {
         window.scrollTo(0, 0);
         setShowInfo(!showInfo);
       }} height={height}>
       </canvas>
       <div id="banner-info" className="md:ml-20 ml-5 font-serif h-full" hidden={!showInfo}>
         <ValueChanger name="rule" value={rule} setter={setRule} presets={[30, 45, 90, 105, 110]} />
-        <ValueChanger name="window size" value={windowSize} setter={setWindowSize} presets={[22, 51, 101, 255]} />
+        <ValueChanger name="window size" value={windowSize} setter={setWindowSize} presets={[22, 51, 101, 251, 901]} />
         <ValueChanger name="cell size" value={bs} setter={setBs} presets={[1, 2, 4, 8]} />
         <ValueChanger name="seed" value={seed} setter={setSeed} presets={[0, windowSize + 42, { text: 'random', action: () => setSeed(Math.round(Math.random() * (500 + 2 * windowSize) + windowSize)) }]} />
         <p><a href="" className="link" onClick={e => {
