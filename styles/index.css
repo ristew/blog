@@ -7,6 +7,10 @@ body {
     overflow-y: scroll;
 }
 
+.link {
+    @apply text-stone-500 underline;
+}
+
 /* Start purging... */
 @tailwind components;
 /* Stop purging. */

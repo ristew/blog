@@ -23,11 +23,15 @@ export default function Index({ allPosts }) {
               <br/>
               <p>A software engineer with his head in the cloud.</p>
               <p>I'm interested in complexity, the ancient world, wellness, and computing.</p>
-              <p>I live in Seattle with my dog, cat, and future wife.</p>
-              <p>Contact: me@here</p>
+              <p>I live in Seattle with my cat, dog, and future wife.</p>
+              <a className="text-sm link" href="mailto:me@rileystew dot art">email</a>
+              <span> </span>
+              <a className="text-sm link" href="https://www.linkedin.com/in/riley-stewart-b582a4a0/">linkedin</a>
+              <span> </span>
+              <a className="text-sm link" href="https://github.com/ristew">github</a>
             </div>
           </section>
-          <section className="font-serif flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">
+          <section className="font-serif flex-col flex md:justify-between mt-16 mb-16 md:mb-12">
             {<MoreStories posts={allPosts} />}
           </section>
       </Layout>

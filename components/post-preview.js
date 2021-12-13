@@ -11,10 +11,10 @@ export default function PostPreview({
   slug,
 }) {
   return (
-    <div className="border-solid border-l-2 border-stone-400 p-8">
-      <h3 className="text-2xl mb-3 font-semibold">
+    <div className="mb-12">
+      <h3 className="text-2xl font-semibold">
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
-          <a className="hover:text-stone-500">{title}</a>
+          <a className="link">{title}</a>
         </Link>
       </h3>
       <div className="mb-4 italic">
