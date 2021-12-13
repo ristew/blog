@@ -119,7 +119,7 @@ export default function Banner() {
         <ValueChanger name="rule" value={rule} setter={setRule} presets={[30, 45, 90, 105, 110]} />
         <ValueChanger name="window size" value={windowSize} setter={setWindowSize} presets={[22, 51, 101, 255]} />
         <ValueChanger name="cell size" value={bs} setter={setBs} presets={[1, 2, 4, 8]} />
-        <ValueChanger name="seed" value={seed} setter={setSeed} presets={[0, 42, { text: 'random', action: () => setSeed(Math.round(Math.random() * (500 + 2 * windowSize) + windowSize)) }]} />
+        <ValueChanger name="seed" value={seed} setter={setSeed} presets={[0, windowSize + 42, { text: 'random', action: () => setSeed(Math.round(Math.random() * (500 + 2 * windowSize) + windowSize)) }]} />
         <p><a href="" className="link" onClick={e => {
           e.preventDefault();
           setShowInfo(false);
