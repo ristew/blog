@@ -9,6 +9,10 @@
   @apply my-6;
 }
 
+.markdown blockquote {
+  @apply pl-6 border-l-4 border-stone-500 text-stone-500;
+}
+
 .markdown h2 {
   @apply text-3xl mt-12 leading-snug;
 }
