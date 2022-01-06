@@ -53,6 +53,24 @@ const ValueChanger = ({ name, value, setter, presets }) => {
   </p>);
 }
 
+function colorMod(row, x) {
+  const w = 155;
+  return wrapMod(row, x) * (w / x);
+}
+
+function wrapMod(n, r) {
+  let res = Math.abs(2 * n % (r * 2) - r);
+  return res;
+}
+
+function cellColor(row, frameRatio) {
+  const basis = 20 + 60 * frameRatio;
+  const r = colorMod(row, 23) + basis;
+  const g = colorMod(row, 37) + basis;
+  const b = colorMod(row, 53) + basis;
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
 export default function Banner() {
   const [windowWidth, windowHeight] = useWindowSize();
   const [bs, setBs] = useState(2);
@@ -103,6 +121,7 @@ export default function Banner() {
       const col = automata.nextState();
       for (let v = 0; v < col.length; v++) {
         if (col[v]) {
+          ctx.fillStyle = cellColor(row, v / col.length);
           ctx.fillRect(bs * dpi * row - offset, bs * dpi * v, bs * dpi, bs * dpi);
         }
       }
