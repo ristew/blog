@@ -86,13 +86,14 @@ export default function Banner() {
   }
   const [showInfo, setShowInfo] = useState(false);
   const [seed, setSeed] = useState(123);
+  const [color, setColor] = useState(false);
+  const toggleColor = () => setColor(!color);
   const [animateSpeed, setAnimateSpeed] = useState(0);
   const height = bs * windowSize - 2;
   let interval;
-  if (seed > 0 && seed < windowSize) {
-    // will leave a gap, seed should always be greater than windowSize
-    setSeed(windowSize + 42);
-  }
+  const randomizeSeed = () => {
+    setSeed(Math.round(Math.random() * (500 + 2 * windowSize) + windowSize))
+  };
 
 
   useEffect(async () => {
@@ -121,7 +122,9 @@ export default function Banner() {
       const col = automata.nextState();
       for (let v = 0; v < col.length; v++) {
         if (col[v]) {
-          ctx.fillStyle = cellColor(row, v / col.length);
+          if (color) {
+            ctx.fillStyle = cellColor(row, v / col.length);
+          }
           ctx.fillRect(bs * dpi * row - offset, bs * dpi * v, bs * dpi, bs * dpi);
         }
       }
@@ -143,7 +146,11 @@ export default function Banner() {
         <ValueChanger name="rule" value={rule} setter={setRule} presets={[30, 45, 90, 105, 110]} />
         <ValueChanger name="window size" value={windowSize} setter={setWindowSize} presets={[22, 51, 101, 251, 901]} />
         <ValueChanger name="cell size" value={bs} setter={setBs} presets={[1, 2, 4, 8]} />
-        <ValueChanger name="seed" value={seed} setter={setSeed} presets={[0, windowSize + 42, { text: 'random', action: () => setSeed(Math.round(Math.random() * (500 + 2 * windowSize) + windowSize)) }]} />
+        <ValueChanger name="seed" value={seed} setter={setSeed} presets={[0, windowSize + 42, { text: 'random', action: randomizeSeed }]} />
+        <p><a href="" className="link" onClick={e => {
+          e.preventDefault();
+          toggleColor();
+        }}>{color ? 'no' : ''} color</a></p>
         <p><a href="" className="link" onClick={e => {
           e.preventDefault();
           setShowInfo(false);

@@ -29,6 +29,8 @@ export default function Index({ allPosts }) {
               <a className="text-sm link" href="https://www.linkedin.com/in/riley-stewart-b582a4a0/">linkedin</a>
               <span> </span>
               <a className="text-sm link" href="https://github.com/ristew">github</a>
+              <span> </span>
+              <a className="text-sm link" href="/resume">resume</a>
             </div>
           </section>
           <section className="font-serif flex-col flex md:justify-between mt-16 mb-16 md:mb-12">
