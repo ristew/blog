@@ -1,6 +1,6 @@
 ---
 title: 'How I learned to Stop Worrying and Love HyperCard'
-excerpt: "An essay dredged straight out of 1990, about HyperCard and obstinancy."
+excerpt: "An essay dredged straight out of 1990, about HyperCard and obstinacy."
 date: '2022-01-27'
 author:
   name: Jason Gervich
