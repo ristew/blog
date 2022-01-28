@@ -5,8 +5,6 @@ date: '2022-01-27'
 author:
   name: Jason Gervich
 ---
-# How I Learned to Stop Worrying and Love HyperCard
-
 I recently became interested in the field of human computer interfaces, and acquired a book of essays called *The Art of Human-Computer Interface Design*, as it wasn’t available anywhere online and was fairly cheap used. Originally published in 1990, it is a collection of essays, half from Apple employees, on topics related to interface design, from technical, philosophical, and methodological viewpoints. Edited by Brenda Laurel, the volume includes a range of impressive authors: Howard Rheingold, Don Norman, Joy Mountford, Alan Kay, Jean-Louis Gassée, Timothy Leary, Nicholas Negroponte, and even a young Douglas Crawford, as well as many other accomplished designers I’m leaving out. The following essay was written by Jason Gervich, who, as far as I can tell, was a technical writer, had little other internet presence, and died in 2010. I found it to be a humorous account of a very new way of doing things “clicking” with a user and an interesting perspective into why a piece of software from 1987 is still talked about so fondly.
 
 Below is all from the published book.
