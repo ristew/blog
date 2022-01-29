@@ -99,7 +99,7 @@ export default function Banner() {
   useEffect(async () => {
     const canvas = document.getElementById('banner');
     const ctx = canvas.getContext('2d');
-    const dpi = window.devicePixelRatio;
+    const dpi = Math.round(window.devicePixelRatio);
     ctx.clearRect(0, 0, 9999, 9999);
     canvas.height = height * dpi;
     // https://medium.com/wdstack/fixing-html5-2d-canvas-blur-8ebe27db07da
@@ -117,7 +117,6 @@ export default function Banner() {
     const bsd = bs * dpi;
 
     let row = 0;
-    let offset = 0;
     const renderAutomataRow = () => {
       const col = automata.nextState();
       for (let v = 0; v < col.length; v++) {
@@ -125,7 +124,7 @@ export default function Banner() {
           if (color) {
             ctx.fillStyle = cellColor(row, v / col.length);
           }
-          ctx.fillRect(bs * dpi * row - offset, bs * dpi * v, bs * dpi, bs * dpi);
+          ctx.fillRect(bs * dpi * row, bs * dpi * v, bs * dpi, bs * dpi);
         }
       }
       row++;
