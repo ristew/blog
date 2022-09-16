@@ -20,22 +20,18 @@ export default function Index({ allPosts }) {
             <div className="pt-8">
               <div className="font-bold text-3xl italic">Sententiae scribendae</div>
               <div className="text-xl italic">The blog of Riley Stewart</div>
-              <br/>
-              <p>A software engineer with his head in the cloud.</p>
-              <p>I'm interested in complexity, the ancient world, wellness, and computing.</p>
-              <p>I live in Seattle with my cat, dog, and future wife.</p>
-              <a className="text-sm link" href="mailto:me@rileystew dot art">email</a>
-              <span> </span>
-              <a className="text-sm link" href="https://www.linkedin.com/in/riley-stewart-b582a4a0/">linkedin</a>
-              <span> </span>
-              <a className="text-sm link" href="https://github.com/ristew">github</a>
-              <span> </span>
-              <a className="text-sm link" href="/resume">resume</a>
             </div>
           </section>
           <section className="font-serif flex-col flex md:justify-between mt-16 mb-16 md:mb-12">
             {<MoreStories posts={allPosts} />}
           </section>
+        {/* <a className="text-sm link" href="mailto:me@rileystew dot art">email</a> */}
+        {/* <span> </span> */}
+        {/* <a className="text-sm link" href="https://www.linkedin.com/in/riley-stewart-b582a4a0/">linkedin</a> */}
+        {/* <span> </span> */}
+        {/* <a className="text-sm link" href="https://github.com/ristew">github</a> */}
+        {/* <span> </span> */}
+        {/* <a className="text-sm link" href="/resume">resume</a> */}
       </Layout>
     </>
   )

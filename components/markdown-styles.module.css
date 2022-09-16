@@ -22,5 +22,17 @@
 }
 
 .markdown a {
-  @apply text-stone-500 underline
+  @apply text-stone-600 underline
+}
+
+.markdown pre {
+  @apply bg-stone-200 p-6;
+}
+
+.markdown code {
+  @apply text-sm;
+}
+
+.markdown figcaption {
+  @apply flex w-full items-center justify-center text-stone-600 text-sm;
 }
