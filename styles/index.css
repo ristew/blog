@@ -2,6 +2,10 @@
 
 /* Write your own custom base styles here */
 
+html {
+    min-width: 100%;
+}
+
 body {
     @apply bg-amber-50;
     overflow-y: scroll;

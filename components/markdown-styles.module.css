@@ -1,5 +1,5 @@
 .markdown {
-  @apply text-lg leading-relaxed;
+  @apply leading-relaxed;
   font-family: 'EB Garamond', ui-serif, Georgia !important;
 }
 
@@ -32,6 +32,8 @@
 
 .markdown code {
   @apply text-sm;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .markdown figcaption {
