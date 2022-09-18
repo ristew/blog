@@ -1,7 +1,7 @@
 ---
 title: 'From Prototypes to Classes'
 excerpt: "What's object-oriented programming really about?"
-date: '2022-09-14'
+date: '2022-09-18'
 author:
   name: Riley Stewart
 ---
