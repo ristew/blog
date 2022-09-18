@@ -11,6 +11,8 @@ body {
     @apply text-stone-500 underline;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+
 /* Start purging... */
 @tailwind components;
 /* Stop purging. */

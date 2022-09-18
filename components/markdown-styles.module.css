@@ -1,5 +1,6 @@
 .markdown {
-  @apply text-lg leading-relaxed font-serif;
+  @apply text-lg leading-relaxed;
+  font-family: 'EB Garamond', ui-serif, Georgia !important;
 }
 
 .markdown p,
@@ -34,5 +35,5 @@
 }
 
 .markdown figcaption {
-  @apply flex w-full items-center justify-center text-stone-600 text-sm;
+  @apply flex w-full items-center justify-center text-stone-600 text-sm mt-6;
 }
