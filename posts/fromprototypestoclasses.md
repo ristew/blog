@@ -7,13 +7,17 @@ author:
 ---
 
 
-The term 'object-oriented programming' is the source of a great deal of confusion. One of the most common definitions centers around classes as experienced in typical OOP languages like Java, C++, Ruby, and Smalltalk. A lot of software has been built where the concept of object is strongly related to that of class.
+The term 'object-oriented programming' (OOP) is the source of a great deal of confusion. One of the most common definitions centers around classes as experienced in typical OOP languages like Java, C++, Ruby, and Smalltalk. A lot of software has been built where the concept of object is strongly related to that of class.
 
 ![Even Google gets fooled](/assets/blog/fromprototypestoclasses/google.png)
 
 <figcaption>Google offers this questionable definition in the search info box.</figcaption>
 
-Yet, there exist languages that are object-oriented but lack these concepts. In them, objects inherit directly from other objects through delegating to prototypes. The best known example of this is (pre-ES6) Javascript, where constructor functions serve to build objects and organize methods. In this way, object behavior can be specialized without having to define a new class, instead preempting delegation by simply setting a property. A tortured example:
+Yet, there exist languages that are object-oriented but lack these concepts. In them, objects inherit directly from other objects through delegating to prototypes. The best known example of this is (pre-ES6) Javascript, though the idea was first extensively explored in the influential Self system, and initially encountered the real world in Newtonscript. Although all of these languages lack classes, they were able to successfully simulate a wide variety of class systems using the prototype mechanism, indicating that there is something more primitive to OOP.
+
+### Javascript
+
+In Javascript, constructor functions serve to build objects and organize methods. Object behavior can be specialized without having to define a new class, instead preempting prototype delegation by simply setting a property. A tortured example:
 
 ```
 function Person(name) {
@@ -48,7 +52,7 @@ console.log('hmm?'.end()) // ?
 
 <figcaption>This is considered bad practice, but it demonstrates the power of the system.</figcaption>
 
-This style of programming wasn't loved by programmers, especially those coming from a C++ or Java class-based background. The first attempt to bring classes to Javascript was in the [failed Ecmascript 4 standard](https://en.wikipedia.org/wiki/ECMAScript#4th_Edition_(abandoned)), which [struck David Ungar](https://mail.mozilla.org/pipermail/es-discuss/2007-November/004998.html) with "the richness of the additions to the language", adding classes, interfaces, a nominal and structural type system, multimethods, namespacing, packages, generics, and perhaps most radical of all, integers. Brendan Eich tried to dissuade [programmers convinced that Javascript was becoming its namesake](https://web.archive.org/web/20080516222951/http://www.dustindiaz.com/java-in-our-script) in a [@media Ajax Keynote](https://brendaneich.com/2007/11/my-media-ajax-keynote/):
+This style of programming wasn't loved by programmers, especially those coming from a C++ or Java class-based background. The first attempt to bring classes to Javascript was in the [failed Ecmascript 4 standard](https://en.wikipedia.org/wiki/ECMAScript#4th_Edition_(abandoned)), adding classes, interfaces, a nominal and structural type system, multimethods, namespacing, packages, generics, and perhaps most radical of all, integers. There was a great deal of debate about the wide sweeping changes to, as Self's [David Ungar put it lightly](https://mail.mozilla.org/pipermail/es-discuss/2007-November/004998.html), "the richness of the additions to the language". Brendan Eich tried to dissuade [programmers convinced that Javascript was becoming its namesake](https://web.archive.org/web/20080516222951/http://www.dustindiaz.com/java-in-our-script) in a [@media Ajax Keynote](https://brendaneich.com/2007/11/my-media-ajax-keynote/):
 
 > I hold no brief for Java. JS does not need to look like Java. Classes in JS2 are an integrity device, already latent in the built-in objects of JS1, the DOM, and other browser objects. But I do not believe that most Java U. programmers will ever grok functional JS, and I cite [GWT](https://code.google.com/webtoolkit/) uptake as supporting evidence. This does not mean JS2 panders to Java. It does mean JS2 uses conventional syntax for those magic, built-in “classes” mentioned in the ES1-3 and DOM specs.
 > 
@@ -70,6 +74,8 @@ This flexible object system and first class functions make Javascript an attract
 
 WASM might eventually be a target for languages on the Web, but for now it lacks a lot compared to Javascript, like GC and JIT support, and isn't even [that much faster](https://zaplib.com/docs/blog_post_mortem.html) besides in some special cases. Some aspects, like W^X, make implementing a dynamic, incremental language much more difficult. Meanwhile, Javascript has been optimized to run within an order of magnitude of system languages.
 
+### Self
+
 Before Javascript, there was [Self](https://bibliography.selflanguage.org/_static/self-power.pdf). Self was inspired by Smalltalk, especially in its approach to message passing:
 
 > Self features message passing as the fundamental operation, providing access to stored state solely via messages. There are no variables, merely slots containing objects that return themselves. Since Self objects access state solely by sending messages, message passing is more fundamental to Self than to languages with variables.
@@ -83,7 +89,11 @@ This mirrors Alan Kay's later [famed email](http://lists.squeakfoundation.org/pi
 
 [Strongtalk](https://dl.acm.org/doi/pdf/10.1145/167962.165893) was a type-checked version of Smalltalk built on the Self VM. Originally created when Sun shuttered the Self team, it was ultimately bought back by Sun and became the HotSpot JVM. This fate seems to have disappointed the Smalltalk community, at least as I gather from [an aside by Dan Ingalls at the aforementioned Smalltalk event](https://youtu.be/3_bJyXfjztA?t=3528). It had a very smart type system that supported the flexibility of Smalltalk, but the Smalltalk ecosystem had [collapsed](https://gbracha.blogspot.com/2020/05/bits-of-history-words-of-advice.html) with the rise of Java and the Web, and by the time Strongtalk was open-sourced, its moment had passed.
 
+### Newtonscript
+
 There's one more prototypical language worth mentioning - [Newtonscript](https://en.wikipedia.org/wiki/NewtonScript), developed for the ahead-of-its-time Apple Newton. Prototypes offered a way to save on precious memory (the original launched with 640K RAM) and were fast enough for the modest processor. Simple GUI scripting was afforded for in the object system, where objects contained a normal prototype slot as well as a parent slot that was used for view inheritance. The parent slot was later found useful for [an informal class system](http://waltersmith.us/newton/Class-based%20NewtonScript%20Programming.pdf) extensively used on the Newton. 
+
+### So what is OOP?
 
 What's interesting about these examples is that none were deliberately designed to be turned into a class system, yet they all accomodated one. Prototypes appear to be a more primitive inheritance mechanism than classes, which are moreso a very useful design pattern - it's just hard to see as they're so ingrained within their languages. When they were introduced, they were necessary for implementation on limited hardware and helpful for organizing behavior, so they remained key features in later languages, just as how those languages retained structured conditionals and loops while Smalltalk and Lisp showed that they could be integrated into the base language quite easily. This mixing of metaphors often leads to experienced programmers coming from the procedural side developing a bad taste for OOP, seeing it as something just getting in their way.
 
