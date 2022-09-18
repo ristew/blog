@@ -15,7 +15,7 @@ export default function Index({ allPosts }) {
     <>
       <Layout>
         <Head>
-          <title>Riley Stewart's blog</title>
+          <title>Sententiae scribendae</title>
         </Head>
         <Header>
           <div className="">
