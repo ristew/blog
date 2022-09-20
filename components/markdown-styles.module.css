@@ -1,6 +1,6 @@
 .markdown {
   @apply leading-relaxed;
-  font-family: 'EB Garamond', ui-serif, Georgia !important;
+  font-family: ui-serif, Georgia !important;
 }
 
 .markdown p,
@@ -11,7 +11,7 @@
 }
 
 .markdown blockquote {
-  @apply pl-6 border-l-4 border-stone-500 text-stone-500;
+  @apply pl-6 border-l-4 border-stone-500 text-stone-600;
 }
 
 .markdown h2 {
