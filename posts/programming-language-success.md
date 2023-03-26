@@ -16,9 +16,10 @@ Some languages ride waves of hype on their way to glory, taking advantage of fic
 More recently, we've witnessed a different kind of hype cycle with Rust. After spending a few wise years in beta where it could refine the design, Rust has been propelled by an enthusiastic online community (sometimes amusingly referred to as the Rust Evangelism Strike Force) which ceaselessly extolled its virtues of safety and speed in arguing to "rewrite it in rust". Though I think Rust is a good language that deserves to succeed, it wouldn't have what measured success it has attained without the help of these dynamics (case in point: a great deal of available Rust jobs are in the similarly hypey crypto space).
 ### Killer framework
 Ruby, Elixir
-Ruby on Rails is the epitome of the killer framework. Before it hit the scene, Ruby was just another fringe dynamic language that focused on delighting developers. The framework made it easy to build database driven monolithic applications and quickly became the choice for a new breed of products, such as Twitter and Github. Developers learned Ruby just to use Rails, and the two became synonymous. 
+Ruby on Rails is the epitome of the killer framework. Before Rails, Ruby was a fringe dynamic language outside of Japan. Its small community [revelled](https://web.archive.org/web/20040904090155/http://poignantguide.net/ruby/) in the expressiveness and fun that Matz designed the language with. With Rails, it was easy to build database driven monolithic applications and quickly became the choice for a new breed of products, such as Twitter and Github. Developers learned Ruby just to use Rails, and the two became synonymous. Elixir is patterned after Ruby in more than just the syntax; Phoenix provides a similar killer framework as Rails in driving its adoption. 
 ### Platform blessed
 Swift/Objective-C, JS
+Kind of the opposite direction of the killer framework is when a language is propelled by 
 ### Free and available
 C/C++, Java, everything
 ### Third-party ecosystem
