@@ -2,6 +2,7 @@
 title: 'Why do programming languages succeed and fail?'
 excerpt: "It's not just because they're good or bad"
 date: '2023-03-24'
+draft: true
 author:
   name: Riley Stewart
 ---
