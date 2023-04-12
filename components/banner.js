@@ -73,19 +73,19 @@ function cellColor(row, frameRatio) {
 
 export default function Banner() {
   const [windowWidth, windowHeight] = useWindowSize();
-  const [bs, setBs] = useState(2);
+  const [bs, setBs] = useState(1);
   if (bs < 1) {
     setBs(1);
   }
-  const [windowSize, setWindowSize] = useState(51);
-  const [rule, setRule] = useState(30);
+  const [windowSize, setWindowSize] = useState(101);
+  const [rule, setRule] = useState(110);
   if (rule < 0) {
     return setRule(0);
   } else if (rule > 255) {
     return setRule(255);
   }
   const [showInfo, setShowInfo] = useState(false);
-  const [seed, setSeed] = useState(123);
+  const [seed, setSeed] = useState(329);
   const [color, setColor] = useState(false);
   const toggleColor = () => setColor(!color);
   const [animateSpeed, setAnimateSpeed] = useState(0);
