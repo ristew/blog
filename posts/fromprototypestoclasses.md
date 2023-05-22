@@ -109,8 +109,3 @@ What's interesting about these examples is that none were deliberately designed 
 When they were introduced, classes were necessary for implementation on limited hardware and helpful for organizing behavior, so they remained key features in later languages, just as how those languages retained structured conditionals and loops while Smalltalk and Lisp showed that they could be integrated into the base language quite easily. Treated uncarefully, these mixed metaphors quickly become design flaws that give experienced programmers a bad taste for OOP.
 
 Prototypes imply that OOP shouldn't be defined in terms of classes. Instead, as [Alan Kay said](http://worrydream.com/EarlyHistoryOfSmalltalk/), the "whole point of OOP is not to have to worry about what is inside an object". Encapsulation is the ultimate goal and messaging is the means. This lets programmers drop into the shoes of objects and [reason about how they work](https://www.tech.dmu.ac.uk/~mjdean/notes/modules/education/EDUC2323/syntonicity2.pdf) just like children learning LOGO can reason about the turtle as it moves. A skill like programming is much more graspable if the user can bring in experiences from other domains, as metaphors and points of view. The success of object-oriented programming is not some conspiracy - it acknowledges the human at the other end and helps them build a world of meaning in software. 
-
-
-Treaty of Orlando
-Lua?
-https://en.wikipedia.org/wiki/Prototype_theory
