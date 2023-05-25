@@ -100,7 +100,6 @@ export default function Banner() {
     const canvas = document.getElementById('banner');
     const ctx = canvas.getContext('2d');
     const dpi = Math.round(window.devicePixelRatio);
-    ctx.clearRect(0, 0, 9999, 9999);
     canvas.height = height * dpi;
     // https://medium.com/wdstack/fixing-html5-2d-canvas-blur-8ebe27db07da
     canvas.setAttribute('width', dpi * getComputedStyle(canvas).getPropertyValue('width').slice(0, -2));
@@ -136,7 +135,7 @@ export default function Banner() {
 
   return (
     <>
-      <canvas id="banner" className="border-b-2 border-stone-400 hover:cursor-help w-full" onClick={e => {
+      <canvas id="banner" className="border-b-2 border-stone-400 hover:cursor-help w-full h-100" onClick={e => {
         window.scrollTo(0, 0);
         setShowInfo(!showInfo);
       }} height={height}>
