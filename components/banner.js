@@ -90,6 +90,7 @@ export default function Banner() {
   const toggleColor = () => setColor(!color);
   const [animateSpeed, setAnimateSpeed] = useState(0);
   const height = bs * windowSize - 2;
+  console.log('height', height);
   let interval;
   const randomizeSeed = () => {
     setSeed(Math.round(Math.random() * (500 + 2 * windowSize) + windowSize))
@@ -104,6 +105,7 @@ export default function Banner() {
     // https://medium.com/wdstack/fixing-html5-2d-canvas-blur-8ebe27db07da
     canvas.setAttribute('width', dpi * getComputedStyle(canvas).getPropertyValue('width').slice(0, -2));
     canvas.setAttribute('height', dpi * getComputedStyle(canvas).getPropertyValue('height').slice(0, -2));
+    console.log(canvas.getAttribute('height'));
     let automata = new WolframAutomata(rule, windowSize);
     if (seed > 0) {
       automata.randomSeed(seed);
@@ -135,7 +137,7 @@ export default function Banner() {
 
   return (
     <>
-      <canvas id="banner" className="border-b-2 border-stone-400 hover:cursor-help w-full h-100" onClick={e => {
+      <canvas id="banner" className="border-b-2 border-stone-400 hover:cursor-help w-full" onClick={e => {
         window.scrollTo(0, 0);
         setShowInfo(!showInfo);
       }} height={height}>
