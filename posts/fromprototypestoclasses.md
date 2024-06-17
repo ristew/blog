@@ -1,6 +1,6 @@
 ---
-title: 'From Prototypes to Classes'
-excerpt: "What's object-oriented programming really about?"
+title: 'From prototypes to classes'
+excerpt: "Building object orientation from the ground up"
 date: '2022-09-20'
 author:
   name: Riley Stewart

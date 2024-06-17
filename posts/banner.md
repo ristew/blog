@@ -1,6 +1,6 @@
 ---
 title: 'About that banner'
-excerpt: 'Elementary cellular automata: chaos and computation distilled to a simple basis.'
+excerpt: 'Elementary cellular automata as ornament'
 date: '2021-12-13'
 author:
   name: Riley Stewart

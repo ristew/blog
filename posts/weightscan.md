@@ -1,9 +1,9 @@
 ---
-title: 'weightscan: squeezing transformer hidden states into 3d'
-excerpt: "What is the shape of a language model's thoughts?"
+title: 'Weightscan: squeezing transformer hidden states into 3d'
+excerpt: "Searching for the shape of a language model's thoughts"
 date: '2024-05-13'
 author:
-  name: Riley Stewart
+  name: Riley 
 ---
 The inner operation of the transformer-based language model eludes scientific explanation. Text goes in, it gets tokenized and embedded, matrices are multiplied, and a next token distribution is returned. The era of frontier models demands a pioneering spirit to navigate. Thus, despite not being familiar with modern machine learning techniques, I started hacking on a script to somehow visualize the layerwise transformation of the hidden states of a large language model small enough to run on my 3060. 
 

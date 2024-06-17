@@ -1,6 +1,6 @@
 ---
 title: 'Modeling our way out of this mess'
-excerpt: "Humans are modeling machines that are just now learning how to construct them consciously."
+excerpt: "Models rule everything around me"
 date: '2021-12-29'
 author:
   name: Riley Stewart
