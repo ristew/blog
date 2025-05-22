@@ -9,6 +9,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "simplex-noise": "^4.0.3",
     "simulabra": "github:simulabra/simulabra"
   }
 }
