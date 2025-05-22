@@ -71,6 +71,39 @@ export default await function (_, $) {
     ]
   });
 
+/* -------- MultiGrid -------- */
+$.Class.new({
+  name: 'MultiGrid',
+  slots: [
+    $.Var.new({ name: 'levels' }),                      // Array<Grid>
+    $.Static.new({
+      name: 'from',
+      do(w, h, sizes) {                                 // sizes: e.g. [8, 16, 32]
+        return $.MultiGrid.new({
+          levels: sizes.map(sz => $.Grid.from(w, h, sz))
+        });
+      }
+    }),
+    $.Method.new({                                      // write to every level
+      name: 'mark',
+      do(p) { this.levels().forEach(g => g.mark(p)); }
+    }),
+    $.Method.new({                                      // weighted sum of ∇ρ
+      name: 'grad',
+      do(p) {
+        let acc   = $.Vec2.from(0, 0);
+        let total = 0;
+        this.levels().forEach(g => {
+          const w = 1 / g.cellSize();                  // finer ⇒ larger weight
+          acc   = acc.add(g.grad(p).mul(w));
+          total += w;
+        });
+        return acc.mul(1 / Math.max(total, 1e-5));
+      }
+    })
+  ]
+});
+
   /* -------- Vine -------- */
   $.Class.new({
     name: 'Vine',
@@ -112,10 +145,8 @@ export default await function (_, $) {
 
           const emptyDir = parent.grid().grad(this.pos()).mul(-1);
           const swirlDir = this.curl().normalize().mul(0.5);
-          const lerp     = 0.1 * (this.pos().y() / h) ** 2;
-          // const upDir    = $.Vec2.from(0, -1).mul(lerp);
-          const upDir = $.Vec2.from(w / 2, h / 2).sub(this.pos()).normalize().mul(0.05);
-          const prev     = (this.lastDir() || upDir).mul(this.size());
+          const upDir = $.Vec2.from(w / 2, h / 2).sub(this.pos()).normalize().mul(0.02 * this.size());
+          const prev     = (this.lastDir() || upDir).mul(Math.sqrt(this.size()));
 
           const raw = upDir.add(emptyDir).add(swirlDir).add(prev).normalize();
           const dir = prev
@@ -205,12 +236,12 @@ export default await function (_, $) {
             const w = this.canvas().width;
             const h = this.canvas().height;
 
-            const grid = $.Grid.from(w, h, 8);
+            const grid = $.MultiGrid.from(w, h, [8, 16, 32]);
             this.grid(grid);
 
             this.vines([
-              $.Vine.new({ pos: $.Vec2.from(w / 2, h), size: 5 }),
-              $.Vine.new({ pos: $.Vec2.from(w / 2, 0), size: 5 }),
+              $.Vine.new({ pos: $.Vec2.from(w / 3, h), size: 5 }),
+              $.Vine.new({ pos: $.Vec2.from(2 * w / 3, 0), size: 5 }),
             ]);
 
             this.drawLoop();
@@ -293,8 +324,11 @@ export default await function (_, $) {
       $.Method.new({
         name: 'render',
         do() { 
-          return $.HTML.t`<div class="mainstage">
-            The way I see myself is as a technologist with one foot in the past and the other in the future. The early history of computing fascinates me, especially the ascendency of objects leading up to the millenium. But right now I am putting the most effort into understanding the unreasonable effectiveness of transformer-based language models and the nature of intelligent systems more broadly. 
+          return $.HTML.t`<div class="mainstage about">
+            <p>A technologist with one foot in the past and the other in the future.
+            Fascinated by the history of computing, especially the rise and fall of objects.
+            Currently focused on understanding the unreasonable effectiveness of transformer-based language models and the nature of intelligent systems more broadly.
+            I live in Seattle with my wife, cat, and two dogs.</p>
             <a href="#" onclick=${() => this.parent().toState($.Home)}>home</a>
           </div>`;
         }

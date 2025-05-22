@@ -9,6 +9,12 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('./EBGaramond-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 html, body {
   height: 100%;
@@ -31,7 +37,7 @@ body {
   font-size: 1.5em;
   background: #ebdbb2;
   color: #3c3836;
-  font-family: 'Morris Roman';
+  font-family: 'EB Garamond';
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,11 +49,13 @@ a {
 }
 
 .nomen {
-  font-size: 4em;
+  font-size: 2.5em;
+  font-family: 'Morris Roman';
 }
 
 .project-nomen {
-  font-size: 3em;
+  font-size: 2em;
+  font-family: 'Morris Roman';
 }
 
 .mainstage {
@@ -63,12 +71,16 @@ a {
 
 
 @media only screen and (max-width: 600px) {
+  body {
+    font-size: 1em;
+  }
+
   .nomen {
-    font-size: 2em;
+    font-size: 1.5em;
   }
 
   .project-nomen {
-    font-size: 2em;
+    font-size: 1.5em;
   }
 }
 
