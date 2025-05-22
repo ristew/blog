@@ -166,7 +166,7 @@ $.Class.new({
 
           const leafmod = Math.floor(10 * this.size());
           if (this.t() % leafmod === 0) {
-            const lw = 12 * s, lh = 24 * s;
+            const lw = 18 * s, lh = 36 * s;
             const side   = (Math.floor(this.t() / leafmod) % 2 === 0 ? 0 : 2);
             const angle  = Math.atan2(dir.y(), dir.x()) + side * Math.PI / 2;
             const ox = this.lastDir().x() * (lh + this.size() * s);
@@ -366,15 +366,6 @@ $.Class.new({
           const cur = this.appstate()?.class().name() ?? 'Home';
           history.pushState({ state: cur }, '', `/#${cur}`);
           this.appstate(cls.new({ parent: this }));
-        }
-      }),
-      $.Method.new({
-        name: 'back',
-        do() {
-          const prev = this.history().pop();
-          if (prev) {
-            this.appstate(prev);
-          }
         }
       }),
       $.Method.new({
