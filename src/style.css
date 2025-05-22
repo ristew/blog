@@ -1,3 +1,8 @@
+:root {
+  --background-shadow: #A28062;
+  --background-light: #F2D8A3;
+  --box-shadow-args: 1px 1px 0px 0px var(--background-shadow), -1px -1px 0px 0px var(--background-light), -2px -2px var(--background-light), -2px 0 var(--background-light), 0 -2px var(--background-light), 2px 2px var(--background-shadow), 0 2px var(--background-shadow), 2px 0 var(--background-shadow), 2px -2px var(--background-light), -2px 2px var(--background-shadow);
+}
 @font-face {
   font-family: 'Morris Roman';
   src: url('./MorrisRoman-Black.ttf') format('truetype');
@@ -23,7 +28,8 @@ html, body {
 }
 
 body {
-  background: #fbf1c7;
+  font-size: 1.5em;
+  background: #ebdbb2;
   color: #3c3836;
   font-family: 'Morris Roman';
   display: flex;
@@ -33,17 +39,35 @@ body {
 }
 
 a {
-  font-size: 1.5em;
   color: #076678;
 }
 
 .nomen {
-  font-size: 6em;
+  font-size: 4em;
+}
+
+.project-nomen {
+  font-size: 3em;
+}
+
+.mainstage {
+  background: #fbf1c788;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  box-shadow: var(--box-shadow-args);
+  width: 66vw;
 }
 
 
 @media only screen and (max-width: 600px) {
   .nomen {
+    font-size: 2em;
+  }
+
+  .project-nomen {
     font-size: 2em;
   }
 }
