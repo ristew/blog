@@ -191,11 +191,10 @@ export default await function (_, $) {
       $.After.new({
         name: 'init',
         do() {
-          document.addEventListener('DOMContentLoaded', () => {
+          const vineInit = () => {
             this.canvas(document.getElementById('bg-canvas'));
             this.ctx(this.canvas().getContext('2d'));
             this.dpi(Math.round(window.devicePixelRatio));
-            this.log(this.dpi());
 
             const style = getComputedStyle(this.canvas());
             const wCss = parseFloat(style.getPropertyValue('width'));
@@ -209,17 +208,21 @@ export default await function (_, $) {
             const grid = $.Grid.from(w, h, 8);
             this.grid(grid);
 
-            // this.vines(Array.from(
-            //   { length: 8 },
-            //   (it, idx) => $.Vine.new({ pos: $.Vec2.from(idx * w / 7, h), size: 5 }),
-            // ));
             this.vines([
               $.Vine.new({ pos: $.Vec2.from(w / 2, h), size: 5 }),
               $.Vine.new({ pos: $.Vec2.from(w / 2, 0), size: 5 }),
             ]);
 
             this.drawLoop();
-          });
+          };
+          if (document.readyState !== 'loading') {
+            vineInit();
+          } else {
+            document.addEventListener('DOMContentLoaded', () => {
+              vineInit();
+            });
+          }
+
         }
       }),
       $.Method.new({
@@ -311,7 +314,6 @@ export default await function (_, $) {
         name: 'init',
         do() {
           window.addEventListener('popstate', (event) => {
-            this.log('popstate', event.state);
             if (event.state !== null) {
               const stateName = event.state?.state || 'Home';
               const cur = this.appstate()?.class().name() ?? 'Home';
