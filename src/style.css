@@ -67,6 +67,13 @@ a {
   padding: 1em;
   box-shadow: var(--box-shadow-args);
   width: 66vw;
+  max-height: 80vh;
+}
+
+.blogpost {
+  align-items: start;
+  justify-content: start;
+  overflow-y: auto;
 }
 
 

@@ -15,7 +15,8 @@ export default await function (_, $) {
       $.Method.new({ name: 'mul', do(s) { return $.Vec2.from(this.x() * s, this.y() * s); } }),
       $.Method.new({ name: 'length', do() { return Math.hypot(this.x(), this.y()); } }),
       $.Method.new({ name: 'dist', do(v) { return Math.hypot(this.x() - v.x(), this.y() - v.y()); } }),
-      $.Method.new({ name: 'normalize', do() { return this.mul(1 / Math.max(this.length(), 1e-5)); } })
+      $.Method.new({ name: 'normalize', do() { return this.mul(1 / Math.max(this.length(), 1e-5)); } }),
+      $.Method.new({ name: 'description', do() { return `$.Vec2[${this.x()},${this.y()}]`; } })
     ]
   });
 
@@ -30,12 +31,11 @@ export default await function (_, $) {
       $.Var.new({ name: 'emptyval', default: 2 }),
       $.Static.new({
         name: 'from',
-        do(w, h, sz) {
-          const width = Math.ceil(w / sz);
-          const height = Math.ceil(h / sz);
-          this.log('new grid', width, height, sz);
+        do(w, h, cellSize) {
+          const width = Math.ceil(w / cellSize);
+          const height = Math.ceil(h / cellSize);
           return $.Grid.new({
-            cellSize: sz,
+            cellSize,
             width,
             height,
             data: new Uint8Array(width * height)
@@ -49,7 +49,7 @@ export default await function (_, $) {
           const ix = Math.floor(p.x() / this.cellSize());
           const iy = Math.floor(p.y() / this.cellSize());
           if (ix >= 0 && iy >= 0 && ix < this.width() && iy < this.height()) {
-            this.data()[this.index(ix, iy)] = this.emptyval();
+            this.data()[this.index(ix, iy)] = Math.min(255, this.data()[this.index(ix, iy)] + 1);
           }
         }
       }),
@@ -62,7 +62,7 @@ export default await function (_, $) {
           const w = this.width();
           const h = this.height();
           const d = this.data();
-          const idx = (x, y) => (x < 0 || y < 0 || x >= w || y >= h) ? this.emptyval() * 2 : d[this.index(x, y)];
+          const idx = (x, y) => (x < 0 || y < 0 || x >= w || y >= h) ? 255 : d[this.index(x, y)];
           const dRdx = idx(ix + 1, iy) - idx(ix - 1, iy);
           const dRdy = idx(ix, iy + 1) - idx(ix, iy - 1);
           return $.Vec2.from(dRdx, dRdy);
@@ -86,19 +86,21 @@ $.Class.new({
     }),
     $.Method.new({                                      // write to every level
       name: 'mark',
-      do(p) { this.levels().forEach(g => g.mark(p)); }
+      do(p, s) { this.levels()[s - 1].mark(p); }
     }),
     $.Method.new({                                      // weighted sum of ∇ρ
       name: 'grad',
-      do(p) {
-        let acc   = $.Vec2.from(0, 0);
+      do(p, s) {
+        let acc = $.Vec2.from(0, 0);
         let total = 0;
-        this.levels().forEach(g => {
+        for (let i = s - 1; i < this.levels().length; i++) {
+          const g = this.levels()[i];
           const w = 1 / g.cellSize();                  // finer ⇒ larger weight
-          acc   = acc.add(g.grad(p).mul(w));
-          total += w;
-        });
-        return acc.mul(1 / Math.max(total, 1e-5));
+          acc.add(g.grad(p));
+          total += 1;
+        }
+        return acc.mul(1 / total);
+        // return acc.mul(1 / Math.max(total, 1e-5));
       }
     })
   ]
@@ -118,12 +120,10 @@ $.Class.new({
       $.Var.new({ name: 'lastDir' }),
       $.Method.new({
         name: 'curl',
-        do() {
-          const eps = 0.0007;
-          const scale = 10 * eps;
-          const base = this.fieldOffset();
-          const x = (this.pos().x() + base.x()) * scale;
-          const y = (this.pos().y() + base.y()) * scale;
+        do(w, h) {
+          const eps = 0.5;
+          const x = 100 * this.pos().x() / w;
+          const y = 100 * this.pos().y() / h;
           const n1 = this.noise()(x + eps, y);
           const n2 = this.noise()(x - eps, y);
           const n3 = this.noise()(x, y + eps);
@@ -138,15 +138,16 @@ $.Class.new({
           const w        = parent.canvas().width;
           const h        = parent.canvas().height;
           const s = parent.dpi() / 2;
-          if (this.t() > lifespan || this.pos().x() > w || this.pos().x() < 0 || this.pos().y() > h || this.pos().y() < 0) {
+          if (this.t() > lifespan) {
             this.active(false);
             return;
           }
 
-          const emptyDir = parent.grid().grad(this.pos()).mul(-1);
-          const swirlDir = this.curl().normalize().mul(0.5);
-          const upDir = $.Vec2.from(w / 2, h / 2).sub(this.pos()).normalize().mul(0.02 * this.size());
-          const prev     = (this.lastDir() || upDir).mul(Math.sqrt(this.size()));
+          const emptyDir = parent.grid().grad(this.pos(), this.size()).mul(-1);
+          const swirlDir = this.curl(w, h).normalize().mul(0.5);
+          const upDir = $.Vec2.from(0, -0.05);
+          const prev     = (this.lastDir() || $.Vec2.from(0, -1)).mul(Math.sqrt(this.size()));
+          // this.log('empty', emptyDir, 'swirl', swirlDir, 'up', upDir, 'prev', prev);
 
           const raw = upDir.add(emptyDir).add(swirlDir).add(prev).normalize();
           const dir = prev
@@ -162,7 +163,7 @@ $.Class.new({
           parent.ctx().arc(this.pos().x(), this.pos().y(), this.size() * s, 0, Math.PI * 2);
           parent.ctx().fill();
 
-          parent.grid().mark(this.pos());
+          parent.grid().mark(this.pos(), this.size());
 
           const leafmod = Math.floor(10 * this.size());
           if (this.t() % leafmod === 0) {
@@ -235,13 +236,14 @@ $.Class.new({
 
             const w = this.canvas().width;
             const h = this.canvas().height;
+            const maxSize = 5;
 
-            const grid = $.MultiGrid.from(w, h, [8, 16, 32]);
+            const grid = $.MultiGrid.from(w, h, [8, 12, 16, 24, 32]);
             this.grid(grid);
 
             this.vines([
-              $.Vine.new({ pos: $.Vec2.from(w / 3, h), size: 5 }),
-              $.Vine.new({ pos: $.Vec2.from(2 * w / 3, 0), size: 5 }),
+              $.Vine.new({ pos: $.Vec2.from(w / 4, h), size: 5 }),
+              $.Vine.new({ pos: $.Vec2.from(3 * w / 4, h), size: 5 }),
             ]);
 
             this.drawLoop();
@@ -263,7 +265,9 @@ $.Class.new({
             if (!document.hidden) {
               let vinecur = this.vinecur();
               const vine = this.vines()[vinecur];
-              vine.draw(this);
+              if (vine) {
+                vine.draw(this);
+              }
               vinecur++;
               if (vinecur >= this.vines().length) {
                 vinecur = 0;
@@ -290,6 +294,7 @@ $.Class.new({
             <div class="nomen">Riley Stewart</div>
             <a href="#Projects" onclick=${() => this.parent().toState($.Projects)}>projects</a>
             <a href="#About" onclick=${() => this.parent().toState($.About)}>about</a>
+            <a href="#Blog" onclick=${() => this.parent().toState($.Blog)}>blog</a>
           </div>`;
         }
       }),
@@ -337,6 +342,61 @@ $.Class.new({
   });
 
   $.Class.new({
+    name: 'Blog',
+    slots: [
+      $.Var.new({ name: 'parent' }),
+      $.Signal.new({ name: 'posts' }),
+      $.Method.new({
+        name: 'baseurl',
+        do() {
+          return window.location.hostname === 'localhost' ? 'http://localhost:3000/' : '/posts';
+        }
+      }),
+      $.Method.new({
+        name: 'loadPost',
+        do(name) {
+          fetch(this.baseurl() + '/' + name).then(async res => this.parent().toState($.Post, { data: await res.json() }));
+        }
+      }),
+      $.After.new({
+        name: 'init',
+        do() {
+          fetch(this.baseurl()).then(async res => this.posts(await res.json()));
+        }
+      }),
+      $.Method.new({
+        name: 'render',
+        do() { 
+          if (!this.posts()) {
+            return $.HTML.t`<div class="mainstage">
+              <div>loading posts...</div>
+              <a href="#" onclick=${() => this.parent().toState($.Home)}>home</a>
+            </div>`;
+          }
+          return $.HTML.t`<div class="mainstage">
+            ${() => this.posts().map(p => $.HTML.t`<div><a onclick=${() => this.loadPost(p.name)} href=${`#posts/${p.name}`}>${p.metadata.title}</a></div>`)}
+            <a href="#" onclick=${() => this.parent().toState($.Home)}>home</a>
+          </div>`;
+        }
+      }),
+    ]
+  });
+
+  $.Class.new({
+    name: 'Post',
+    slots: [
+      $.Var.new({ name: 'parent' }),
+      $.Var.new({ name: 'data' }),
+      $.Method.new({
+        name: 'render',
+        do() { 
+          return $.HTML.t([`<div class="mainstage blogpost"><h1>${this.data().metadata.title}</h1><article>` + this.data().html + '</article></div>']);
+        }
+      }),
+    ]
+  });
+
+  $.Class.new({
     name: 'App',
     slots: [
       $.Component,
@@ -361,11 +421,12 @@ $.Class.new({
       }),
       $.Method.new({
         name: 'toState',
-        do(cls) {
+        do(cls, args = {}) {
           this.history().push(this.appstate());
           const cur = this.appstate()?.class().name() ?? 'Home';
           history.pushState({ state: cur }, '', `/#${cur}`);
-          this.appstate(cls.new({ parent: this }));
+          args.parent = this;
+          this.appstate(cls.new(args));
         }
       }),
       $.Method.new({
