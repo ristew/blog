@@ -116,7 +116,7 @@ await async function (_, $) {
         name: 'loadPosts',
         do: async function loadPosts() {
           this.posts().clear();
-          const postsDir = join(import.meta.dir, 'posts');
+          const postsDir = join(import.meta.dir, 'src', 'posts');
           
           try {
             const files = await readdir(postsDir);
@@ -170,7 +170,7 @@ await async function (_, $) {
     const parser = $.MarkdownParser.new();
     const repository = $.PostRepository.new({ parser });
     await repository.loadPosts();
-    const postsDir = join(import.meta.dir, 'posts')
+    const postsDir = join(import.meta.dir, 'src', 'posts')
     try {
       await mkdir(postsDir, { recursive: true });
     } catch (error) {

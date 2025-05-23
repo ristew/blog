@@ -1,7 +1,7 @@
 import { __, base } from 'simulabra';
 import html from 'simulabra/html';
 import { createNoise2D } from 'simplex-noise';
-import posts from '../posts/posts.json';
+import posts from './posts/posts.json';
 
 export default await function (_, $) {
   /* -------- Vec2 -------- */
@@ -346,25 +346,6 @@ $.Class.new({
     name: 'Blog',
     slots: [
       $.Var.new({ name: 'parent' }),
-      $.Signal.new({ name: 'posts' }),
-      $.Method.new({
-        name: 'baseurl',
-        do() {
-          return window.location.hostname === 'localhost' ? 'http://localhost:3000/' : '/posts';
-        }
-      }),
-      $.Method.new({
-        name: 'loadPost',
-        do(name) {
-          fetch(this.baseurl() + '/' + name).then(async res => this.parent().toState($.Post, { data: await res.json() }));
-        }
-      }),
-      $.After.new({
-        name: 'init',
-        do() {
-          fetch(this.baseurl()).then(async res => this.posts(await res.json()));
-        }
-      }),
       $.Method.new({
         name: 'render',
         do() { 
