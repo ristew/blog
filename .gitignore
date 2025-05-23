@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+/posts/*.html
+/posts/*.json
+
 # production
 /build
 

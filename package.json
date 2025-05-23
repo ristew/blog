@@ -1,24 +1,16 @@
 {
-  "private": true,
-  "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start -p 3006"
+  "name": "blog",
+  "module": "base.js",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.2.9"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3"
   },
   "dependencies": {
-    "classnames": "2.2.6",
-    "date-fns": "2.16.1",
-    "gray-matter": "4.0.2",
-    "next": "latest",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-notion": "^0.10.0",
-    "remark": "13.0.0",
-    "remark-html": "13.0.1"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.2.1",
-    "postcss": "^8.2.4",
-    "tailwindcss": "^3.0.0"
+    "marked": "^15.0.12",
+    "simplex-noise": "^4.0.3",
+    "simulabra": "github:simulabra/simulabra"
   }
 }

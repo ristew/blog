@@ -1,0 +1,111 @@
+:root {
+  --background-shadow: #A28062;
+  --background-light: #F2D8A3;
+  --box-shadow-args: 1px 1px 0px 0px var(--background-shadow), -1px -1px 0px 0px var(--background-light), -2px -2px var(--background-light), -2px 0 var(--background-light), 0 -2px var(--background-light), 2px 2px var(--background-shadow), 0 2px var(--background-shadow), 2px 0 var(--background-shadow), 2px -2px var(--background-light), -2px 2px var(--background-shadow);
+}
+@font-face {
+  font-family: 'Morris Roman';
+  src: url('./MorrisRoman-Black.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('./EBGaramond-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  position: relative;
+}
+
+#bg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  background: transparent; /* canvas itself is clear */
+}
+
+body {
+  font-size: 1.5em;
+  background: #ebdbb2;
+  color: #3c3836;
+  font-family: 'EB Garamond';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home {
+  justify-content: center;
+}
+
+.post {
+  padding: 1em;
+  max-width: 1000px;
+}
+
+a {
+  color: #076678;
+}
+
+img {
+  max-width: 100%;
+}
+
+figcaption, .date {
+  font-size: 1em;
+  color: #7c6f64;
+}
+
+.nomen {
+  font-size: 2.5em;
+  font-family: 'Morris Roman';
+}
+
+.project-nomen {
+  font-size: 2em;
+  font-family: 'Morris Roman';
+}
+
+.mainstage {
+  background: #fbf1c7aa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  box-shadow: var(--box-shadow-args);
+  width: 50vw;
+  max-height: 80vh;
+}
+
+.blogpost {
+  align-items: start;
+  justify-content: start;
+  overflow-y: auto;
+}
+
+
+@media only screen and (max-width: 600px) {
+  body {
+    font-size: 1em;
+  }
+
+  .nomen {
+    font-size: 1.5em;
+  }
+
+  .project-nomen {
+    font-size: 1.5em;
+  }
+}
+
