@@ -250,7 +250,7 @@ $.Class.new({
             this.drawLoop();
           };
           if (document.readyState !== 'loading') {
-            vineInit();
+            setTimeout(vineInit, 50);
           } else {
             document.addEventListener('DOMContentLoaded', () => {
               vineInit();
