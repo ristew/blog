@@ -48,6 +48,10 @@ a {
   color: #076678;
 }
 
+img {
+  max-width: 90vw;
+}
+
 .nomen {
   font-size: 2.5em;
   font-family: 'Morris Roman';
