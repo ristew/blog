@@ -1,0 +1,95 @@
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/src/style.css">
+    <title>rileystew.art - From prototypes to classes</title>
+  </head>
+  <body>
+    <div class="post">
+      <a href="/">home</a>
+      <h3>From prototypes to classes</h3>
+      <div class="date">2022-09-20</div>
+      <p>The term &#39;object-oriented programming&#39; (OOP) is the source of a great deal of confusion. One of the most common definitions centers around classes, central to typical OOP languages like Java, C++, Ruby, and Smalltalk. Enormous amounts of software has been built in these languages, and to a lot of programmers there&#39;s nothing wrong with the following definition:</p>
+<p><img src="/assets/blog/fromprototypestoclasses/google.png" alt="Even Google gets fooled"></p>
+<figcaption>Google offers this questionable definition in the search info box.</figcaption>
+
+<p>Yet, there exist languages that are object-oriented but lack these concepts. In them, objects inherit directly from other objects through delegating to prototypes. The best known example of this is Javascript, though the idea was first extensively explored in the influential Self system, and initially tested in production in Newtonscript. Although these languages lack classes, a wide variety of class systems were successfully simulated with prototypes, indicating we should be looking deeper for the meaning of OOP.</p>
+<h3>Javascript</h3>
+<p>In Javascript, constructor functions serve to build objects and organize methods. Object behavior can be specialized without having to define a new class, instead preempting prototype delegation by simply setting a property. A tortured example:</p>
+<pre><code>function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.greeting = function() {
+  return `Hi ${this.name}`;
+}
+
+let test = new Person(&#39;Tester&#39;);
+console.log(test.greeting()); // Hi Tester
+
+test.greeting = function() {
+  return `What&#39;s up ${this.name}`;
+}
+
+console.log(test.greeting()); // What&#39;s up Tester
+</code></pre>
+<p>In this way, the behavior of the <code>test</code> object was changed by directly changing the object itself, because the <code>greeting</code> method being called is just a property. Delegation operates by querying for missing properties in the prototype, going up the chain until that prototype doesn&#39;t have a next one. Functions are first-class objects bound to the receiver but otherwise the semantics are the same.</p>
+<p>In Javascript, it is easy (but dangerous) to extend the base types.</p>
+<pre><code>String.prototype.end = function() {
+  return this[this.length - 1];
+}
+
+console.log(&#39;hmm?&#39;.end()) // ?
+</code></pre>
+<figcaption>This is considered bad practice, but it demonstrates the power of the system.</figcaption>
+
+<p>This style of programming wasn&#39;t loved by programmers, especially those coming from a C++ or Java class-based background. Closures shined among serious programmers like Douglas Crockford, <a href="http://crockford.com/javascript/inheritance.html">who explored how classes could be accomplished in Javascript in 2002</a> (but later repented for suggesting foisting classes on JS). There were even JQuery-era frameworks that added classes, like <a href="https://en.wikipedia.org/wiki/Prototype_JavaScript_Framework">Prototype</a> (used in <a href="https://rubyonrails.org/2007/1/19/prototype-1-5-now-with-a-manual">Ruby on Rails</a>) and <a href="https://en.wikipedia.org/wiki/MooTools">MooTools</a> (used by <a href="http://worrydream.com/Tangle/download.html">Bret Victor</a>).</p>
+<p>The first real attempt to add classes to the language was in the <a href="https://en.wikipedia.org/wiki/ECMAScript#4th_Edition_(abandoned)">failed Ecmascript 4 standard</a>, also adding interfaces, a nominal and structural type system, multimethods, namespacing, packages, generics, and perhaps most radical of all, integers. There was a great deal of debate about, as Self&#39;s <a href="https://mail.mozilla.org/pipermail/es-discuss/2007-November/004998.html">David Ungar put it lightly</a>, &quot;the richness of the additions to the language&quot;. Brendan Eich tried to dissuade <a href="https://web.archive.org/web/20080516222951/http://www.dustindiaz.com/java-in-our-script">programmers convinced that Javascript was becoming its namesake</a> in a <a href="https://brendaneich.com/2007/11/my-media-ajax-keynote/">@media Ajax Keynote</a>:</p>
+<blockquote>
+<p>I hold no brief for Java. JS does not need to look like Java. Classes in JS2 are an integrity device, already latent in the built-in objects of JS1, the DOM, and other browser objects. But I do not believe that most Java U. programmers will ever grok functional JS, and I cite <a href="https://code.google.com/webtoolkit/">GWT</a> uptake as supporting evidence. This does not mean JS2 panders to Java. It does mean JS2 uses conventional syntax for those magic, built-in “classes” mentioned in the ES1-3 and DOM specs.</p>
+<p>In other words, and whatever you call them, something like classes are necessary for integrity properties vital to security in JS2, required for bootstrapping the standard built-in objects, and appropriate to a large cohort of programmers. These independent facts combine to support classes as proposed in JS2.</p>
+</blockquote>
+<p>For a bevy of reasons, the ES4 proposal was ultimately abandoned for ES3.1, with many of the ideas from ES4 carried on in <a href="https://mail.mozilla.org/pipermail/es-discuss/2008-August/003400.html">ECMAScript Harmony</a>. Eventually, they become the nice features that have made Javascript one of the most popular programming languages today (and ever). The classes, however, were reeled in, as the Harmony proposal explains:</p>
+<blockquote>
+<p>Other goals and ideas from ES4 are being rephrased to keep consensus in the committee; these include a notion of classes based on existing ES3 concepts combined with proposed ES3.1 extensions.</p>
+</blockquote>
+<p>So, no more multimethods, <code>this</code> is still required for scoping, and no nominal or structural type system (though TypeScript would bring that later). ES6 classes can be helpful but they aren&#39;t very flexible, especially compared to those of more metaprogrammable systems like Smalltalk or CLOS. The triumph of React hooks over classes in an area where they typically excel is a clear indictment of their shortcomings (though <a href="https://news.ycombinator.com/item?id=32913497">not everybody is happy with that</a>). Their lack of flexibility means it&#39;s an easy mistake to use them as abstract data types, at which point they only serve to make the functional parts of the language more awkward.</p>
+<p><img src="/assets/blog/fromprototypestoclasses/eshear.png" alt="Emmett puts it well here"></p>
+<figcaption>Emmett diagnoses the heart of the issue here well (<a href="https://twitter.com/eshear/status/1571880429158010884">original</a>)</figcaption>
+
+<p>Though saddled with a gimped class system, the prototypical object system and first-class functions that make Javascript so dynamic are still there and ready to be (ab)used. Countless examples attest to its attractiveness as a target for compilation of a higher level language, which Alan Kay recently mused about at the recent event celebrating the <a href="https://youtu.be/3_bJyXfjztA?t=3019">50th anniversary of Smalltalk</a>:</p>
+<blockquote>
+<p>...Javascript is a little bit of a hodgepodge, but underneath, it has both a model that I think of as being a bit more like Lisp, and a really solid set of foundations, including a really great garbage collector, fabulous optimization. So it&#39;s a little bit of a scattershot of a language, but as something to treat, for example, as the machine code of the next machine you want to turn into something wonderful, Javascript is actually pretty good for the reasons that Lisp is pretty good. You&#39;ve got this dynamic language, something where things run pretty fast, you&#39;ve got WebAssembly if you want to make things run even faster. It, in my opinion, is probably the simplest place for both doing experiments and doing things that you want to deploy today.</p>
+</blockquote>
+<figcaption>The audio was difficult to understand so I hope I've trascribed it correctly.</figcaption>
+
+<p>WASM might eventually be the main target for languages on the Web, but for now it lacks a lot compared to Javascript, like GC and JIT support, and isn&#39;t even <a href="https://zaplib.com/docs/blog_post_mortem.html">that much faster</a> in many cases. Some aspects, like W^X, make implementing a dynamic, incremental language much more difficult. Meanwhile, JS engines like V8 and WebKitCore are constantly being optimized and run everywhere.</p>
+<h3>Self</h3>
+<p>Before Javascript, there was <a href="https://bibliography.selflanguage.org/_static/self-power.pdf">Self</a>. Self was inspired by Smalltalk, especially in its approach to message passing:</p>
+<blockquote>
+<p>Self features message passing as the fundamental operation, providing access to stored state solely via messages. There are no variables, merely slots containing objects that return themselves. Since Self objects access state solely by sending messages, message passing is more fundamental to Self than to languages with variables.</p>
+</blockquote>
+<p>This mirrors Kay&#39;s <a href="http://lists.squeakfoundation.org/pipermail/squeak-dev/1998-October/017019.html">later email on messaging</a>:</p>
+<blockquote>
+<p>The big idea is &quot;messaging&quot; -- that is what the kernal of Smalltalk/Squeak is all about (and it&#39;s something that was never quite completed in our Xerox PARC phase). The Japanese have a small word -- ma -- for &quot;that which is in between&quot; -- perhaps the nearest English equivalent is &quot;interstitial&quot;. The key in making great and growable systems is much more to design how its modules communicate rather than what their internal properties and behaviors should be. Think of the internet -- to live, it (a) has to allow many different kinds of ideas and realizations that are beyond any single standard and (b) to allow varying degrees of safe interoperability between these ideas. </p>
+</blockquote>
+<p>The Self VM pioneered techniques in adaptive optimization for dynamic languages, notably Urs Hölzle&#39;s <a href="https://bibliography.selflanguage.org/_static/type-feedback.pdf">runtime type feedback</a>. Many of its optimizations would later be put to use in V8 by fellow Self VM wizard Lars Bak. </p>
+<p>Later in the project, it was shown that both <a href="http://merlintec.com/vmworkshop99/sub.pdf">Smalltalk and Java</a> could be implemented in Self, a feat which also happened to produce a much faster Smalltalk implementation.</p>
+<p><img src="/assets/blog/fromprototypestoclasses/smalltalk.png" alt="Smalltalk in Self"></p>
+<figcaption>An example of Smalltalk in Self. A lot of the complexity here is from Smalltalk's class variables.</figcaption>
+
+
+<p><a href="https://dl.acm.org/doi/pdf/10.1145/167962.165893">Strongtalk</a> was a type-checked version of Smalltalk built on the Self VM. Originally created when Sun shuttered the Self team, it was ultimately bought back by Sun three years later and became the HotSpot JVM. This fate seems to have disappointed the Smalltalk community, at least as I gather from <a href="https://youtu.be/3_bJyXfjztA?t=3528">an aside by Dan Ingalls at the aforementioned Smalltalk event</a>. It had a very smart type system that supported the flexibility of Smalltalk, but the Smalltalk ecosystem had <a href="https://gbracha.blogspot.com/2020/05/bits-of-history-words-of-advice.html">collapsed</a> with the rise of Java and the Web, and by the time Strongtalk was open-sourced, its moment had passed.</p>
+<h3>Newtonscript</h3>
+<p>There&#39;s one more prototypical language worth mentioning - <a href="https://en.wikipedia.org/wiki/NewtonScript">Newtonscript</a>, developed for the ahead-of-its-time Apple Newton. Prototypes offered a way to save on precious memory (the original launched with 640K RAM) and were fast enough for the modest processor. For simple GUI scripting, the object system included a parent slot used for view inheritance as well as a normal prototype slot. The parent slot was later found useful for <a href="http://waltersmith.us/newton/Class-based%20NewtonScript%20Programming.pdf">an informal class system</a> extensively used on the Newton. </p>
+<h3>So what is OOP?</h3>
+<p>What&#39;s interesting about these examples is that none were deliberately designed to be turned into a class system, yet they all accomodated one. Prototypes appear to be a more primitive inheritance mechanism than classes, which are moreso a very useful design pattern - it&#39;s just hard to see as they&#39;re so ingrained within their languages. There are yet more kinds of object system. Actors, the basis of Erlang and <a href="https://oneofus.la/have-emacs-will-hack/files/HOSC-11-4-pp399-404.pdf">Scheme</a>. </p>
+<p>When they were introduced, classes were necessary for implementation on limited hardware and helpful for organizing behavior, so they remained key features in later languages, just as how those languages retained structured conditionals and loops while Smalltalk and Lisp showed that they could be integrated into the base language quite easily. Treated uncarefully, these mixed metaphors quickly become design flaws that give experienced programmers a bad taste for OOP.</p>
+<p>Prototypes imply that OOP shouldn&#39;t be defined in terms of classes. Instead, as <a href="http://worrydream.com/EarlyHistoryOfSmalltalk/">Alan Kay said</a>, the &quot;whole point of OOP is not to have to worry about what is inside an object&quot;. Encapsulation is the ultimate goal and messaging is the means. This lets programmers drop into the shoes of objects and <a href="https://www.tech.dmu.ac.uk/~mjdean/notes/modules/education/EDUC2323/syntonicity2.pdf">reason about how they work</a> just like children learning LOGO can reason about the turtle as it moves. A skill like programming is much more graspable if the user can bring in experiences from other domains, as metaphors and points of view. The success of object-oriented programming is not some conspiracy - it acknowledges the human at the other end and helps them build a world of meaning in software. </p>
+
+    </div>
+  </body>
+</html>
