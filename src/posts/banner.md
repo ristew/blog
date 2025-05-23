@@ -5,6 +5,10 @@ date: '2021-12-13'
 author:
   name: Riley Stewart
 ---
+(Note: this post refers to a banner that is no longer on this site)
+
+
+
 I've been having a lot of fun in the past few days working on the banner for this blog.  It's a visualisation of elementary cellular automata, with each vertical strip being a state and the next state being to the right of the previous one.  If you click on it, you should be able to see some controls for changing various parameters, most interesting being the rule.  But let me explain first what this is and why I think it matters.
 
 ### The basic science

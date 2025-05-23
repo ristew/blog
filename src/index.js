@@ -331,10 +331,8 @@ $.Class.new({
         name: 'render',
         do() { 
           return $.HTML.t`<div class="mainstage about">
-            <p>A technologist with one foot in the past and the other in the future.
-            Fascinated by the history of computing, especially the rise and fall of objects.
-            Currently focused on understanding the unreasonable effectiveness of transformer-based language models and the nature of intelligent systems more broadly.
-            I live in Seattle with my wife, cat, and two dogs.</p>
+            <p>As a technologist with one foot in the past and the other in the future, I'm fascinated by the history of computing, especially the rise and fall of objects. Currently I'm trying to understand the unreasonable effectiveness of transformer-based language models and the nature of intelligent systems more broadly.
+            I live in Seattle with my wife, cat, and two corgis. If you want to reach me, my email is me@this domain</p>
             <a href="#" onclick=${() => this.parent().toState($.Home)}>home</a>
           </div>`;
         }
