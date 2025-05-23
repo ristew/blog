@@ -1,6 +1,7 @@
 import { __, base } from 'simulabra';
 import html from 'simulabra/html';
 import { createNoise2D } from 'simplex-noise';
+import posts from '../posts/posts.json';
 
 export default await function (_, $) {
   /* -------- Vec2 -------- */
@@ -367,14 +368,8 @@ $.Class.new({
       $.Method.new({
         name: 'render',
         do() { 
-          if (!this.posts()) {
-            return $.HTML.t`<div class="mainstage">
-              <div>loading posts...</div>
-              <a href="#" onclick=${() => this.parent().toState($.Home)}>home</a>
-            </div>`;
-          }
           return $.HTML.t`<div class="mainstage">
-            ${() => this.posts().map(p => $.HTML.t`<div><a onclick=${() => this.loadPost(p.name)} href=${`#posts/${p.name}`}>${p.metadata.title}</a></div>`)}
+            ${() => posts.map(p => $.HTML.t`<div><a href=${`posts/${p.name}`}>${p.metadata.title}</a></div>`)}
             <a href="#" onclick=${() => this.parent().toState($.Home)}>home</a>
           </div>`;
         }

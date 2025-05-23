@@ -93,8 +93,12 @@ await async function (_, $) {
     <title>rileystew.art - ${this.metadata().title}</title>
   </head>
   <body>
-    <h3>${this.metadata().title}</h3>
-    ${this.html()}
+    <div class="post">
+      <a href="/">home</a>
+      <h3>${this.metadata().title}</h3>
+      <div class="date">${this.metadata().date}</div>
+      ${this.html()}
+    </div>
   </body>
 </html>
 `
@@ -124,17 +128,19 @@ await async function (_, $) {
               const slug = file.slice(0, -3);
               
               const { metadata, content: markdown } = this.parser().extractFrontmatter(content);
-              const html = this.parser().parse(markdown);
-              
-              const post = $.Post.new({
-                slug,
-                rawContent: content,
-                metadata,
-                markdown,
-                html
-              });
-              
-              this.posts().set(slug, post);
+              if (!metadata.draft) {
+                const html = this.parser().parse(markdown);
+
+                const post = $.Post.new({
+                  slug,
+                  rawContent: content,
+                  metadata,
+                  markdown,
+                  html
+                });
+
+                this.posts().set(slug, post);
+              }
             }
           } catch (error) {
             console.error('Error loading posts:', error);
@@ -164,18 +170,18 @@ await async function (_, $) {
     const parser = $.MarkdownParser.new();
     const repository = $.PostRepository.new({ parser });
     await repository.loadPosts();
-    const outDir = join(import.meta.dir, 'out')
-    const postsOutDir = join(outDir, 'posts')
+    const postsDir = join(import.meta.dir, 'posts')
     try {
-      await mkdir(postsOutDir, { recursive: true });
+      await mkdir(postsDir, { recursive: true });
     } catch (error) {
       console.error('Error creating output directory:', error);
     }
     
     // Write each post to a file
-    for (const post of repository.getAllPosts()) {
+    const posts = repository.getAllPosts();
+    for (const post of posts) {
       const filename = `${post.slug()}.html`;
-      const filepath = join(postsOutDir, filename);
+      const filepath = join(postsDir, filename);
       
       try {
         await writeFile(filepath, post.template());
@@ -184,6 +190,7 @@ await async function (_, $) {
         console.error(`Error writing ${filename}:`, error);
       }
     }
+    await writeFile(join(postsDir, 'posts.json'), JSON.stringify(posts.map(p => ({ name: p.slug(), metadata: p.metadata() }))));
     process.exit(0);
   }
 

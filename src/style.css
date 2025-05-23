@@ -18,6 +18,7 @@
 
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
   position: relative;
 }
@@ -40,8 +41,16 @@ body {
   font-family: 'EB Garamond';
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+}
+
+.home {
+  justify-content: center;
+}
+
+.post {
+  padding: 1em;
+  max-width: 1000px;
 }
 
 a {
@@ -49,7 +58,12 @@ a {
 }
 
 img {
-  max-width: 90vw;
+  max-width: 100%;
+}
+
+figcaption, .date {
+  font-size: 1em;
+  color: #7c6f64;
 }
 
 .nomen {
