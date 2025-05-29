@@ -116,7 +116,7 @@ await async function (_, $) {
         name: 'loadPosts',
         do: async function loadPosts() {
           this.posts().clear();
-          const postsDir = join(import.meta.dir, 'src', 'posts');
+          const postsDir = join(import.meta.dir, 'posts');
           
           try {
             const files = await readdir(postsDir);

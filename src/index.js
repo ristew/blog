@@ -1,7 +1,7 @@
 import { __, base } from 'simulabra';
 import html from 'simulabra/html';
 import { createNoise2D } from 'simplex-noise';
-import posts from './posts/posts.json';
+import posts from '../posts/posts.json';
 
 export default await function (_, $) {
   /* -------- Vec2 -------- */
@@ -416,23 +416,20 @@ $.Class.new({
         name: 'init',
         do() {
           window.addEventListener('popstate', (event) => {
-            if (event.state !== null) {
-              const stateName = event.state?.state || 'Home';
-              const cur = this.appstate()?.class().name() ?? 'Home';
-              history.pushState({ state: cur }, '', `/#`);
-              this.appstate($[stateName].new({ parent: this }));
-            }
+            const stateName = event.state?.state || 'Home';
+            this.appstate($[stateName].new({ parent: this }));
           });
           this.history([]);
-          this.toState($.Home);
+          history.pushState({ state: 'Home' }, '', `/#`);
+          this.appstate($.Home.new({ parent: this }));
         }
       }),
       $.Method.new({
         name: 'toState',
         do(cls, args = {}) {
           this.history().push(this.appstate());
-          const cur = this.appstate()?.class().name() ?? 'Home';
-          history.pushState({ state: cur }, '', `/#`);
+          const stateName = cls.name();
+          history.pushState({ state: stateName }, '', `/#`);
           args.parent = this;
           this.appstate(cls.new(args));
         }
@@ -443,14 +440,6 @@ $.Class.new({
           return $.HTML.t`<span>${() => this.appstate().render()}</span>`;
         }
       }),
-      $.Method.new({
-        name: 'css',
-        do() {
-          return `
-#clicky { color: red; }
-`
-        }
-      })
     ]
   });
 
