@@ -293,7 +293,7 @@ $.Class.new({
       $.Method.new({
         name: 'homelink',
         do() {
-          return $.HTML.t`<a class="home-link" href="#" onclick=${() => this.parent().toState($.Home)}>⮌home</a>`;
+          return $.HTML.t`<a class="home-link" href="#" onclick=${() => this.parent().toState($.Home)}>^^</a>`;
         }
       }),
       $.Method.new({
@@ -312,6 +312,10 @@ $.Class.new({
     name: 'Home',
     slots: [
       $.VPage,
+      $.Var.new({
+        name: 'showHomeButton',
+        default: false
+      }),
       $.Method.new({
         name: 'content',
         do() { 

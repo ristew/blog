@@ -90,11 +90,6 @@ figcaption, .date, .subnomen {
   align-self: flex-start;
 }
 
-.project {
-  margin-bottom: 1em;
-  margin-top: 1em;
-}
-
 .project-nomen {
   font-size: 2em;
   font-family: 'Morris Roman';
@@ -110,6 +105,11 @@ figcaption, .date, .subnomen {
   box-shadow: var(--box-shadow-args);
   width: 50vw;
   max-height: 80vh;
+}
+
+.mainstage > * {
+  flex: 1;
+  padding: 0.5em;
 }
 
 .blogpost {

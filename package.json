@@ -3,7 +3,7 @@
   "module": "base.js",
   "type": "module",
   "devDependencies": {
-    "@types/bun": "^1.2.9"
+    "@types/bun": "^1.2.15"
   },
   "peerDependencies": {
     "typescript": "^5.8.3"
