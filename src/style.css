@@ -121,11 +121,15 @@ figcaption, .date, .subnomen {
 
 @media only screen and (max-width: 600px) {
   body {
-    font-size: 1.2em;
+    font-size: 1em;
   }
 
   .nomen {
-    font-size: 1.5em;
+    font-size: 1.3em;
+  }
+
+  .subnomen {
+    margin-left: 0.5em;
   }
 
   .project-nomen {
@@ -133,7 +137,7 @@ figcaption, .date, .subnomen {
   }
 
   .mainstage {
-    width: 66vw;
+    width: 80vw;
   }
 }
 
