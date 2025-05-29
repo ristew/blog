@@ -61,14 +61,38 @@ img {
   max-width: 100%;
 }
 
-figcaption, .date {
+figcaption, .date, .subnomen {
   font-size: 1em;
   color: #7c6f64;
+}
+
+.nomen-box {
+  align-self: flex-start;
 }
 
 .nomen {
   font-size: 2.5em;
   font-family: 'Morris Roman';
+}
+
+.subnomen {
+  margin-left: 2em;
+}
+
+.linken {
+  align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.home-link {
+  align-self: flex-start;
+}
+
+.project {
+  margin-bottom: 1em;
+  margin-top: 1em;
 }
 
 .project-nomen {
@@ -79,9 +103,9 @@ figcaption, .date {
 .mainstage {
   background: #fbf1c7aa;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
   padding: 1em;
   box-shadow: var(--box-shadow-args);
   width: 50vw;
@@ -97,7 +121,7 @@ figcaption, .date {
 
 @media only screen and (max-width: 600px) {
   body {
-    font-size: 1em;
+    font-size: 1.2em;
   }
 
   .nomen {
@@ -106,6 +130,10 @@ figcaption, .date {
 
   .project-nomen {
     font-size: 1.5em;
+  }
+
+  .mainstage {
+    width: 66vw;
   }
 }
 

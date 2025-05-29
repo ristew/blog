@@ -285,18 +285,47 @@ $.Class.new({
   });
 
   $.Class.new({
-    name: 'Home',
+    name: 'VPage',
     slots: [
       $.Var.new({ name: 'parent' }),
+      $.Virtual.new({ name: 'content' }),
+      $.Var.new({ name: 'showHomeButton', default: true }),
+      $.Method.new({
+        name: 'homelink',
+        do() {
+          return $.HTML.t`<a class="home-link" href="#" onclick=${() => this.parent().toState($.Home)}>⮌home</a>`;
+        }
+      }),
       $.Method.new({
         name: 'render',
+        do(additionalClasses = []) {
+          const classes = ['mainstage', ...additionalClasses].join(' ');
+          return $.HTML.t`<div>${this.showHomeButton() ? this.homelink() : ''}<div class=${classes}>${() => this.content()}</div></div>`;
+          
+        }
+      }),
+    ]
+  });
+      
+
+  $.Class.new({
+    name: 'Home',
+    slots: [
+      $.VPage,
+      $.Method.new({
+        name: 'content',
         do() { 
-          return $.HTML.t`<div class="mainstage">
+          return $.HTML.t`
+          <div class="nomen-box">
             <div class="nomen">Riley Stewart</div>
-            <a href="#Projects" onclick=${() => this.parent().toState($.Projects)}>projects</a>
-            <a href="#About" onclick=${() => this.parent().toState($.About)}>about</a>
-            <a href="#Blog" onclick=${() => this.parent().toState($.Blog)}>blog</a>
-          </div>`;
+            <div class="subnomen">conjuring infinite software</div>
+          </div>
+          <div class="linken">
+            <a class="page-link" href="#" onclick=${() => this.parent().toState($.Projects)}>projects</a>
+            <a class="page-link" href="#" onclick=${() => this.parent().toState($.About)}>about</a>
+            <a class="page-link" href="#" onclick=${() => this.parent().toState($.Blog)}>blog</a>
+          </div>
+          `;
         }
       }),
     ]
@@ -305,19 +334,22 @@ $.Class.new({
   $.Class.new({
     name: 'Projects',
     slots: [
-      $.Var.new({ name: 'parent' }),
+      $.VPage,
       $.Method.new({
-        name: 'render',
+        name: 'content',
         do() { 
-          return $.HTML.t`<div class="mainstage">
-            <div class="project-nomen">Simulabra</div>
-            <div>An object-oriented Javascript framework inspired by the Common Lisp Object System and Smalltalk. This site is built with Simulabra.</div>
-            <a href="https://github.com/simulabra/simulabra" target="_blank">repo</a>
-            <div class="project-nomen">Weightscan</div>
-            <div>Machine learning as art: experimenting with using autoencoders to embed 3d point clouds of transformer layer hidden states</div>
-            <a href="https://github.com/ristew/weightscan" target="_blank">repo</a>
-            <a href="#" onclick=${() => this.parent().toState($.Home)}>home</a>
-          </div>`;
+          return $.HTML.t`
+            <div class="project">
+              <div class="project-nomen">Simulabra</div>
+              <div>An object-oriented Javascript framework inspired by the Common Lisp Object System and Smalltalk. This site is built with Simulabra.</div>
+              <a href="https://github.com/simulabra/simulabra" target="_blank">repo</a>
+            </div>
+            <div class="project">
+              <div class="project-nomen">Weightscan</div>
+              <div>Machine learning as art: experimenting with using autoencoders to embed 3d point clouds of transformer layer hidden states</div>
+              <a href="https://github.com/ristew/weightscan" target="_blank">repo</a>
+            </div>
+          `;
         }
       }),
     ]
@@ -326,15 +358,14 @@ $.Class.new({
   $.Class.new({
     name: 'About',
     slots: [
-      $.Var.new({ name: 'parent' }),
+      $.VPage,
       $.Method.new({
-        name: 'render',
+        name: 'content',
         do() { 
-          return $.HTML.t`<div class="mainstage about">
-            <p>As a technologist with one foot in the past and the other in the future, I'm fascinated by the history of computing, especially the rise and fall of objects. Currently I'm trying to understand the unreasonable effectiveness of transformer-based language models and the nature of intelligent systems more broadly.
-            I live in Seattle with my wife, cat, and two corgis. If you want to reach me, my email is me@this domain</p>
-            <a href="#" onclick=${() => this.parent().toState($.Home)}>home</a>
-          </div>`;
+          return $.HTML.t`
+            <div>As a technologist with one foot in the past and the other in the future, I'm fascinated by the history of computing, especially the rise and fall of objects. Currently I'm trying to understand the unreasonable effectiveness of transformer-based language models and the nature of intelligent systems more broadly.</div>
+            <div>I live in Seattle with my wife, cat, and two corgis. If you want to reach me, my email is me@this domain</div>
+          `;
         }
       }),
     ]
@@ -343,13 +374,12 @@ $.Class.new({
   $.Class.new({
     name: 'Blog',
     slots: [
-      $.Var.new({ name: 'parent' }),
+      $.VPage,
       $.Method.new({
-        name: 'render',
+        name: 'content',
         do() { 
-          return $.HTML.t`<div class="mainstage">
-            ${() => posts.map(p => $.HTML.t`<div><a href=${`posts/${p.name}`}>${p.metadata.title}</a></div>`)}
-            <a href="#" onclick=${() => this.parent().toState($.Home)}>home</a>
+          return $.HTML.t`<div>
+            ${() => posts.map(p => $.HTML.t`<div>${p.metadata.date} <a href=${`posts/${p.name}`}>${p.metadata.title}</a></div>`)}
           </div>`;
         }
       }),
@@ -385,7 +415,7 @@ $.Class.new({
             if (event.state !== null) {
               const stateName = event.state?.state || 'Home';
               const cur = this.appstate()?.class().name() ?? 'Home';
-              history.pushState({ state: cur }, '', `/#${cur}`);
+              history.pushState({ state: cur }, '', `/#`);
               this.appstate($[stateName].new({ parent: this }));
             }
           });
@@ -398,7 +428,7 @@ $.Class.new({
         do(cls, args = {}) {
           this.history().push(this.appstate());
           const cur = this.appstate()?.class().name() ?? 'Home';
-          history.pushState({ state: cur }, '', `/#${cur}`);
+          history.pushState({ state: cur }, '', `/#`);
           args.parent = this;
           this.appstate(cls.new(args));
         }
