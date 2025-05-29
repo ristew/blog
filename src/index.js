@@ -253,7 +253,7 @@ $.Class.new({
             setTimeout(vineInit, 50);
           } else {
             document.addEventListener('DOMContentLoaded', () => {
-              vineInit();
+              setTimeout(vineInit, 50);
             });
           }
 
@@ -319,15 +319,19 @@ $.Class.new({
       $.Method.new({
         name: 'content',
         do() { 
+          const navTo = cls => e => {
+            e.preventDefault();
+            this.parent().toState(cls);
+          };
           return $.HTML.t`
           <div class="nomen-box">
             <div class="nomen">Riley Stewart</div>
             <div class="subnomen">conjuring infinite software</div>
           </div>
           <div class="linken">
-            <a class="page-link" href="#" onclick=${() => this.parent().toState($.Projects)}>projects</a>
-            <a class="page-link" href="#" onclick=${() => this.parent().toState($.About)}>about</a>
-            <a class="page-link" href="#" onclick=${() => this.parent().toState($.Blog)}>blog</a>
+            <a class="page-link" href="#" onclick=${navTo($.Projects)}>projects</a>
+            <a class="page-link" href="#" onclick=${navTo($.About)}>about</a>
+            <a class="page-link" href="#" onclick=${navTo($.Blog)}>blog</a>
           </div>
           `;
         }
@@ -437,7 +441,7 @@ $.Class.new({
       $.Method.new({
         name: 'render',
         do() { 
-          return $.HTML.t`<span>${() => this.appstate().render()}</span>`;
+          return $.HTML.t`<div>${() => this.appstate().render()}</div>`;
         }
       }),
     ]
