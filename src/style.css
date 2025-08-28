@@ -35,7 +35,7 @@ html, body {
 }
 
 body {
-  font-size: 1.5em;
+  font-size: 1.25em;
   background: #ebdbb2;
   color: #3c3836;
   font-family: 'EB Garamond';
@@ -103,7 +103,7 @@ figcaption, .date, .subnomen {
   align-items: start;
   padding: 1em;
   box-shadow: var(--box-shadow-args);
-  width: 50vw;
+  width: 60vw;
   max-height: 80vh;
 }
 
@@ -119,11 +119,7 @@ figcaption, .date, .subnomen {
 }
 
 
-@media only screen and (max-width: 600px) {
-  body {
-    font-size: 1em;
-  }
-
+@media only screen and (max-width: 768px) {
   .nomen {
     font-size: 1.3em;
   }

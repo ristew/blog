@@ -347,17 +347,18 @@ $.Class.new({
         name: 'content',
         do() { 
           return $.HTML.t`
+          <div>
             <div class="project">
-              <div class="project-nomen">Simulabra</div>
-              <div>An object-oriented Javascript framework inspired by the Common Lisp Object System and Smalltalk. This site is built with Simulabra.</div>
+              <div class="project-nomen">SIMULABRA</div>
+              <p>A fresh take on object-oriented programming in Javascript, inspired by Lisp and Smalltalk. This site is powered by Simulabra.</p>
               <a href="https://github.com/simulabra/simulabra" target="_blank">repo</a>
             </div>
             <div class="project">
-              <div class="project-nomen">Weightscan</div>
+              <div class="project-nomen">weightscan</div>
               <div>Machine learning as art: experimenting with using autoencoders to embed 3d point clouds of transformer layer hidden states</div>
               <a href="https://github.com/ristew/weightscan" target="_blank">repo</a>
             </div>
-          `;
+          </div>`;
         }
       }),
     ]
@@ -371,9 +372,13 @@ $.Class.new({
         name: 'content',
         do() { 
           return $.HTML.t`
-            <div>As a technologist with one foot in the past and the other in the future, I'm fascinated by the history of computing, especially the rise and fall of objects. Currently I'm trying to understand the unreasonable effectiveness of transformer-based language models and the nature of intelligent systems more broadly.</div>
-            <div>I live in Seattle with my wife, cat, and two corgis. If you want to reach me, my email is me@this domain</div>
-          `;
+          <div>
+            <p>INTELLECTUAL INTERESTS: object technology, interpretability, phenomenology</p>
+            <p>OTHER HOBBIES: 3d printing, photography, motorcycle restoration</p>
+            <p>CHARMED LIFE: wife, cat, two corgis</p>
+            <p>FIND ME: second hill, seattle</p>
+            <p>REACH ME: me@this domain</p>
+          </div>`;
         }
       }),
     ]
