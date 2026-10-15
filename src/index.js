@@ -373,6 +373,7 @@ $.Class.new({
         do() { 
           return $.HTML.t`
           <div>
+            <p>CURRENTLY: building the future of social software at <a href="https://prom.dev" target="_blank">prom.dev</a></p>
             <p>INTELLECTUAL INTERESTS: object technology, interpretability, phenomenology</p>
             <p>OTHER HOBBIES: 3d printing, photography, motorcycle restoration</p>
             <p>CHARMED LIFE: wife, cat, two corgis</p>
